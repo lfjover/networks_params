@@ -1,4 +1,4 @@
-#Multiple regimes of robust patterns between network structure and biodiversity.
+#Scripts to generate the figures in: "Multiple regimes of robust patterns between network structure and biodiversity"
 
 figs_paper.m generates all the figures in the paper using results precomputed and saved in the folder data.
 
