@@ -6,6 +6,7 @@ data.
 To recreate the data an example is provided in example_one_run.m. It calculates the dynamics for 100 matrices and one set of parameters.
 
 ![alt tag](https://github.com/lfjover/networks_params/blob/master/bio_one_set.png)
+
 Most of the results were computed using a computer cluster because each run of 100 matrices takes hours. The results of the paper are the average of 100 runs.
 
 pers_one_set_v2.m uses pp_integrator_stop_heu.m to integrate  the system based on the stopping time heuristic described in the supplementary information.
