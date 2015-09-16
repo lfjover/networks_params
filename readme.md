@@ -8,6 +8,6 @@ To show how the data was created an example is provided in example_one_run.m. It
 
 The plots in Figure 3 were created in this way (with a single run for each parameter set). For Figure 2 and 4 each plot is an average of 100 diferent runs where each run uses a different parameters set. To calculate the data in Figures 2 and 4 we used a computer cluster to compute each run in parallel.
 
-Each run is computed using the function pers_one_set.m u which calls pp_integrator_stop_heu.m to integrate  the system based on the stopping time heuristic described in the Methods section.
+Each run is computed using the function pers_one_set.m  which calls pp_integrator_stop_heu.m to integrate  the system based on the stopping time heuristic described in the Methods section.
 
 For Figure 7 pp_integrator_fixed_time.m was used to integrate the system for a fixed time.
