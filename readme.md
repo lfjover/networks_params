@@ -1,14 +1,13 @@
 #Multiple regimes of robust patterns between network structure and biodiversity.
 
-figs_paper.m produces the figures for the paper using results precomputed and saved in 
-data.
+figs_paper.m generates all the figures in the paper using results precomputed and saved in the folder data.
 
-To recreate the data an example is provided in example_one_run.m. It calculates the dynamics for 100 matrices and one set of parameters.
+To show how the data was created an example is provided in example_one_run.m. It calculates the dynamics for  100 different matrices in the  matrix ensemble using the same parameter set for all of them. This results in the following image
 
 ![alt tag](https://github.com/lfjover/networks_params/blob/master/bio_one_set.png)
 
-Most of the results were computed using a computer cluster because each run of 100 matrices takes hours. The results of the paper are the average of 100 runs.
+The plots in Figure 3 were created in this way (with a single run for each parameter set). For Figure 2 and 4 each plot is an average of 100 diferent runs were ,each run uses a different parameters set. To calculate the data in Figures 2 and 4 we used a computer cluster were the runs were computed in parallel.
 
-pers_one_set_v2.m uses pp_integrator_stop_heu.m to integrate  the system based on the stopping time heuristic described in the supplementary information.
+Each run is computed using the function pers_one_set.m u which calls pp_integrator_stop_heu.m to integrate  the system based on the stopping time heuristic described in the Methods section.
 
-In the appendix pp_integrator_fixed_time.m was used to integrate the system for a fixed time.
+For Figure 7 pp_integrator_fixed_time.m was used to integrate the system for a fixed time.
