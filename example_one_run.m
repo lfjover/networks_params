@@ -8,7 +8,7 @@ iSet = 1;
 pers_one_set(paramsFile,outDir,iSet)
 
 
-% plot biodiversity vs. nestedness
+%% plot biodiversity vs. nestedness
 res = [outDir 'result_' runName '_' num2str(iSet)];
 load(res) %load biodiversity result
 load(paramsFile) %load nestedness values for matrix ensemble
@@ -21,4 +21,5 @@ ylim([0 1])
 xlim([sortNest(1) 1])
 xlabel('Nestedness (NODF)','interpreter','latex','fontsize',fs)
 ylabel('Biodiversity', 'interpreter', 'latex', 'fontsize',fs)
-print('-dpdf','bio_one_set.pdf')
+setfigure(10,8,6,6);print('-dpdf','bio_one_set.pdf')
+setfigure(10,8,6,6);print('-dpng','bio_one_set.png')
