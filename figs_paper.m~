@@ -1,6 +1,4 @@
 %% Figure 2a: biodiversity vs nestedness ruled-based framework only fm100
-close all
-clear all
 
 runName = 'rb_fm100_v2';
 
@@ -27,6 +25,8 @@ ylabel('Biodiversity', 'interpreter', 'latex', 'fontsize',fs)
 % printpdf('../manuscript/images/rb_pers_v_ness_fm100')
 
 %% Figure 2b: biodiverist vs nestedness ruled-based framework only fm1
+
+
 runName = 'rb_fm1_v2';
 
 figure(2);clf;setfigure(10,6,5,5)
@@ -228,73 +228,77 @@ PlotWeb(matrices(:,:,100))
 % print('-dpdf','../manuscript/images/pers_ss_all_4')
   
 %% plot and fit bio vs nest for all deltas for middle nestedness (fm28)
-% clear all
-% close all
-% 
-% focalM =28;
-% % load('data/params_delta_1')
-% par = ['data/params_fm' num2str(focalM) '_delta1_v4'];
-% load(par)
-% % deltaV = deltaV(1:3);
-% % create 3d matrix with all the runs;
-% survM3D = [];
-% for ii =1 :length(deltaV)
-%      survFile = ['data/result_fm' num2str(focalM) '_delta' num2str(ii) '_v4'];
-% %     survFile = ['data/result_delta_' num2str(ii)];
-%     load(survFile) %loads file with survM matrix 
-%     survM3D = cat(3,survM3D,survM);
-% end
-% 
-% % fit slope for mean pers for every value of delta
-% slopes =  [];
-% rsqV = [];
-% rSpear = [];
-% rPear= [];
-% 
-% setfigure(20,20,10,5)
-% fs = 14;
-% ms = 6;
-% 
-% for dd = 1:size(survM3D,3)
-%     survM = survM3D(:,:,dd);
-%     y = mean(survM)./(nH+nV);
-%     p = polyfit(sortNest,y,1);
-%     slopes = [slopes p(1)];
-%     yfit = polyval(p,sortNest);
-%     yresid = y - yfit;
-%     SSresid =  sum(yresid.^2);
-%     SStotal = (length(y)-1)*var(y);
-%     rsqV = [rsqV (1-SSresid/SStotal)];
-%     
-%        
-%     subplot(3,2,dd)
-%     plot(sortNest,y,'ok','markerfacecolor',[.6 1 .6],...
-%         'markersize',ms)
-% %     title(['\delta = ' num2str(deltaV(dd)) ' r_S = ' ...
-% %         num2str(rSpear(end)) ' r_P = ' num2str(rPear(end))...
-% %         ' m = ' num2str(slopes(end))])
-%     hold on  
-%     plot(sortNest,yfit,'-k','linewidth',2)
-%     hold off
-%     if dd >4
-%     xlabel('Nestedness (NODF)','interpreter','latex','fontsize',fs)
-%     end
-%     if mod(dd,2) ==1
-%     ylabel('Biodiversity', 'interpreter', 'latex', 'fontsize',fs)
-%     end
-%     ylim([0 1])
-%     xlim([min(sortNest) max(sortNest)])
-%     xtext = 0.82;
-%     ysep = 0.1;
-%     ytop = 0.93;
-%     text(xtext,ytop,['\delta = ' num2str(deltaV(dd))])
-%     text(xtext,ytop-ysep,['m = ' sprintf('%.2f',slopes(end))])
-%     text(xtext,ytop-2*ysep,['R^2 = ' sprintf('%.2f',rsqV(end))]) 
-% end
-%  pdfname = ['../manuscript/images/diff_delta_fm' num2str(focalM)];
-% %    printpdf(pdfname)
+clear all
+close all
 
-%% Figure 4a-f: bio vs nest for all deltas for low-nestedness network (fm1)
+focalM =28;
+% load('data/params_delta_1')
+par = ['data/params_fm' num2str(focalM) '_delta1_v4'];
+load(par)
+% deltaV = deltaV(1:3);
+% create 3d matrix with all the runs;
+survM3D = [];
+for ii =1 :length(deltaV)
+     survFile = ['data/result_fm' num2str(focalM) '_delta' num2str(ii) '_v4'];
+%     survFile = ['data/result_delta_' num2str(ii)];
+    load(survFile) %loads file with survM matrix 
+    survM3D = cat(3,survM3D,survM);
+end
+
+% fit slope for mean pers for every value of delta
+slopes =  [];
+rsqV = [];
+rSpear = [];
+rPear= [];
+
+setfigure(20,20,10,5)
+fs = 14;
+ms = 6;
+
+for dd = 1:size(survM3D,3)
+    survM = survM3D(:,:,dd);
+    y = mean(survM)./(nH+nV);
+    p = polyfit(sortNest,y,1);
+    slopes = [slopes p(1)];
+    yfit = polyval(p,sortNest);
+    yresid = y - yfit;
+    SSresid =  sum(yresid.^2);
+    SStotal = (length(y)-1)*var(y);
+    rsqV = [rsqV (1-SSresid/SStotal)];
+    
+       
+    subplot(3,2,dd)
+    plot(sortNest,y,'ok','markerfacecolor',[.6 1 .6],...
+        'markersize',ms)
+%     title(['\delta = ' num2str(deltaV(dd)) ' r_S = ' ...
+%         num2str(rSpear(end)) ' r_P = ' num2str(rPear(end))...
+%         ' m = ' num2str(slopes(end))])
+    hold on  
+    plot(sortNest,yfit,'-k','linewidth',2)
+    hold off
+    if dd >4
+    xlabel('Nestedness (NODF)','interpreter','latex','fontsize',fs)
+    end
+    if mod(dd,2) ==1
+    ylabel('Biodiversity', 'interpreter', 'latex', 'fontsize',fs)
+    end
+    ylim([0 1])
+    xlim([min(sortNest) max(sortNest)])
+    xtext = 0.82;
+    ysep = 0.1;
+    ytop = 0.93;
+    text(xtext,ytop,['\delta = ' num2str(deltaV(dd))])
+    text(xtext,ytop-ysep,['m = ' sprintf('%.2f',slopes(end))])
+    text(xtext,ytop-2*ysep,['R^2 = ' sprintf('%.2f',rsqV(end))]) 
+end
+ pdfname = ['../manuscript/images/diff_delta_fm' num2str(focalM)];
+%    printpdf(pdfname)
+
+%% Figu 4g-l: bio vs nest for all deltas for  perfectly nested net (fm100)
+
+clear all
+close all
+
 
 focalM =1;
 % load('data/params_delta_1')
@@ -317,7 +321,6 @@ rSpear = [];
 rPear= [];
 pValues = [];
 
-figure(4)
 setfigure(20,20,10,5)
 fs = 18;
 ms = 6;
@@ -370,7 +373,11 @@ end
  pdfname = ['../manuscript/images/diff_delta_fm' num2str(focalM)];
 % print('-dpdf',pdfname)
 
-%% Figure 4g-l: bio vs nest for all deltas for  perfectly nested net (fm100)
+%% Figu 4g-l: bio vs nest for all deltas for  perfectly nested net (fm100)
+
+clear all
+close all
+
 focalM =100; %focal matrix
 par = ['data/params_fm' num2str(focalM) '_delta1_v4'];
 load(par)
@@ -392,7 +399,6 @@ rSpear = [];
 rPear= [];
 pValues = [];
 
-figure(5)
 setfigure(20,20,10,5)
 fs = 18;
 ms = 6;
@@ -446,10 +452,10 @@ end
 pdfname = ['../manuscript/images/diff_delta_fm' num2str(focalM)];
 % print('-dpdf', pdfname)
 
-%% Figure 6: Focal networks in perturbation-based framework
+%% example of 3 infection networks
+clear all;
 load('matrices/matrices_10by10_100_invertible.mat')
 fs =18;
-figure(6)
 setfigure(20,7,10,10)
 subplot(1,3,3)
 M = matrices(:,:,end);
@@ -475,10 +481,9 @@ xlabel(['NODF = ' num2str(sortNest(1),'%0.2f')],...
         'fontsize',fs-2,'interpreter','latex')
 print('-dpdf','../../manuscript/images/sample_matrices')
 
-%% Figure 7: focal networks in ruled-based framework 
-%  low nestedness and perfectly nested networks
+%% low nestedness and perfectly nested networks
+close all
 fs =20;
-figure(7)
 setfigure(13,5,10,10)
 load('matrices/matrices_10by10_100_special.mat')
 subplot(1,2,1)
@@ -497,9 +502,10 @@ text(-1.5,12.5,'b','fontsize',fs)
 
 % print('-dpdf','../manuscript/images/focal_mat_rb_2')
 
-%% Fgure 8; doubling time
-figure(8);clf;
-setfigure(20,15,5,5)
+%% doubling time
+
+clear all
+figure(1);clf;setfigure(20,15,5,5)
 fs = 14;
 ms = 6;
 
