@@ -11,3 +11,5 @@ The plots in Figure 3 were created in this way (with a single run for each param
 Each run is computed using the function pers_one_set.m  which calls pp_integrator_stop_heu.m to integrate  the system based on the stopping time heuristic described in the Methods section.
 
 For Figure 7 pp_integrator_fixed_time.m was used to integrate the system for a fixed time.
+
+The code that generates the paramters used in all the runs is in generate_paramters.m
