@@ -5,9 +5,9 @@ outDir = 'data/example/';
 iSet = 1;
 
 % calculate biodiversity for 100 matrices
-tic
+
 pers_one_set(paramsFile,outDir,iSet)
-toc
+
 
 %% plot biodiversity vs. nestedness
 res = [outDir 'result_' runName '_' num2str(iSet)];
