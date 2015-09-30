@@ -24,8 +24,6 @@ xlabel('Nestedness (NODF)','interpreter','latex','fontsize',fs)
 ylabel('Biodiversity', 'interpreter', 'latex', 'fontsize',fs)
 
 
-% printpdf('../manuscript/images/rb_pers_v_ness_fm100')
-
 %% Figure 2b: biodiverist vs nestedness ruled-based framework only fm1
 runName = 'rb_fm1_v2';
 
@@ -51,10 +49,8 @@ xlabel('Nestedness (NODF)','interpreter','latex','fontsize',fs)
 ylabel('Biodiversity', 'interpreter', 'latex', 'fontsize',fs)
 
 
-% printpdf('../manuscript/images/rb_pers_v_ness_fm1')
-
 %% Figure 3: perturbation-based framework one plot for each trend, single set
-runC = {'single_set_fm1','single_set_fm28','single_set_fm100'};
+runC = {'single_set_fm1_v5','single_set_fm28','single_set_fm100'};
 
 
 % set fontsize and markersize
@@ -225,87 +221,19 @@ text(xtext,ytop-ysep,['R^2 = ' sprintf('%.2f',rsq)],...
 axes('units','centimeters','position',...
     [mx+3*axW+2*intD-matH my+axH+matD matH matH])
 PlotWeb(matrices(:,:,100))
-% print('-dpdf','../manuscript/images/pers_ss_all_4')
+
   
-%% plot and fit bio vs nest for all deltas for middle nestedness (fm28)
-% clear all
-% close all
-% 
-% focalM =28;
-% % load('data/params_delta_1')
-% par = ['data/params_fm' num2str(focalM) '_delta1_v4'];
-% load(par)
-% % deltaV = deltaV(1:3);
-% % create 3d matrix with all the runs;
-% survM3D = [];
-% for ii =1 :length(deltaV)
-%      survFile = ['data/result_fm' num2str(focalM) '_delta' num2str(ii) '_v4'];
-% %     survFile = ['data/result_delta_' num2str(ii)];
-%     load(survFile) %loads file with survM matrix 
-%     survM3D = cat(3,survM3D,survM);
-% end
-% 
-% % fit slope for mean pers for every value of delta
-% slopes =  [];
-% rsqV = [];
-% rSpear = [];
-% rPear= [];
-% 
-% setfigure(20,20,10,5)
-% fs = 14;
-% ms = 6;
-% 
-% for dd = 1:size(survM3D,3)
-%     survM = survM3D(:,:,dd);
-%     y = mean(survM)./(nH+nV);
-%     p = polyfit(sortNest,y,1);
-%     slopes = [slopes p(1)];
-%     yfit = polyval(p,sortNest);
-%     yresid = y - yfit;
-%     SSresid =  sum(yresid.^2);
-%     SStotal = (length(y)-1)*var(y);
-%     rsqV = [rsqV (1-SSresid/SStotal)];
-%     
-%        
-%     subplot(3,2,dd)
-%     plot(sortNest,y,'ok','markerfacecolor',[.6 1 .6],...
-%         'markersize',ms)
-% %     title(['\delta = ' num2str(deltaV(dd)) ' r_S = ' ...
-% %         num2str(rSpear(end)) ' r_P = ' num2str(rPear(end))...
-% %         ' m = ' num2str(slopes(end))])
-%     hold on  
-%     plot(sortNest,yfit,'-k','linewidth',2)
-%     hold off
-%     if dd >4
-%     xlabel('Nestedness (NODF)','interpreter','latex','fontsize',fs)
-%     end
-%     if mod(dd,2) ==1
-%     ylabel('Biodiversity', 'interpreter', 'latex', 'fontsize',fs)
-%     end
-%     ylim([0 1])
-%     xlim([min(sortNest) max(sortNest)])
-%     xtext = 0.82;
-%     ysep = 0.1;
-%     ytop = 0.93;
-%     text(xtext,ytop,['\delta = ' num2str(deltaV(dd))])
-%     text(xtext,ytop-ysep,['m = ' sprintf('%.2f',slopes(end))])
-%     text(xtext,ytop-2*ysep,['R^2 = ' sprintf('%.2f',rsqV(end))]) 
-% end
-%  pdfname = ['../manuscript/images/diff_delta_fm' num2str(focalM)];
-% %    printpdf(pdfname)
 
 %% Figure 4a-f: bio vs nest for all deltas for low-nestedness network (fm1)
-
 focalM =1;
-% load('data/params_delta_1')
-par = ['data/params_fm' num2str(focalM) '_delta1_v4'];
+
+par = ['data/params_fm' num2str(focalM) '_delta1_v5'];
 load(par)
-% deltaV = deltaV(1:3);
+
 % create 3d matrix with all the runs;
 survM3D = [];
 for ii =1 :length(deltaV)
-     survFile = ['data/result_fm' num2str(focalM) '_delta' num2str(ii) '_v4'];
-%     survFile = ['data/result_delta_' num2str(ii)];
+     survFile = ['data/result_fm' num2str(focalM) '_delta' num2str(ii) '_v5'];
     load(survFile) %loads file with survM matrix 
     survM3D = cat(3,survM3D,survM);
 end
@@ -318,9 +246,11 @@ rPear= [];
 pValues = [];
 
 figure(4)
-setfigure(20,20,10,5)
+setfigure(20,20,60,5)
 fs = 18;
 ms = 6;
+figLetter = {'a','b','c','d','e','f'};
+ii = 1;
 
 for dd = 1:size(survM3D,3)
     survM = survM3D(:,:,dd);
@@ -366,9 +296,10 @@ for dd = 1:size(survM3D,3)
         'fontsize',fsText)
     text(xtext,ytop-2*ysep,['R^2 = ' sprintf('%.2f',rsqV(end))],...
         'fontsize',fsText) 
+    text(min(sortNest),1.12,figLetter{ii},'fontsize',20)
+    ii = ii+1;
 end
- pdfname = ['../manuscript/images/diff_delta_fm' num2str(focalM)];
-% print('-dpdf',pdfname)
+
 
 %% Figure 4g-l: bio vs nest for all deltas for  perfectly nested net (fm100)
 focalM =100; %focal matrix
@@ -380,7 +311,6 @@ load(par)
 survM3D = [];
 for ii =1 :length(deltaV)
      survFile = ['data/result_fm' num2str(focalM) '_delta' num2str(ii) '_v4'];
-%     survFile = ['data/result_delta_' num2str(ii)];
     load(survFile) %loads file with survM matrix 
     survM3D = cat(3,survM3D,survM);
 end
@@ -397,6 +327,8 @@ setfigure(20,20,10,5)
 fs = 18;
 ms = 6;
 
+figLetter = {'g','h','i','j','k','l'};
+ii = 1;
 for dd = 1:size(survM3D,3)
     % fit slope for mean biodiversity for every value of delta
     survM = survM3D(:,:,dd);
@@ -442,9 +374,9 @@ for dd = 1:size(survM3D,3)
         'fontsize',fsText)
     text(xtext,ytop-2*ysep,['R^2 = ' sprintf('%.2f',rsqV(end))],...
         'fontsize',fsText)  
+    text(min(sortNest),1.12,figLetter{ii},'fontsize',20)
+    ii = ii+1;
 end
-pdfname = ['../manuscript/images/diff_delta_fm' num2str(focalM)];
-% print('-dpdf', pdfname)
 
 %% Figure 6: Focal networks in perturbation-based framework
 load('matrices/matrices_10by10_100_invertible.mat')
@@ -473,7 +405,6 @@ title('virus','fontsize',fs,'interpreter','latex')
 ylabel('bacteria','fontsize',fs,'interpreter','latex')
 xlabel(['NODF = ' num2str(sortNest(1),'%0.2f')],...
         'fontsize',fs-2,'interpreter','latex')
-print('-dpdf','../../manuscript/images/sample_matrices')
 
 %% Figure 7: focal networks in ruled-based framework 
 %  low nestedness and perfectly nested networks
@@ -494,8 +425,6 @@ PlotWeb(M)
 title('virus','fontsize',fs,'interpreter','latex')
 ylabel('bacteria','fontsize',fs,'interpreter','latex')
 text(-1.5,12.5,'b','fontsize',fs)
-
-% print('-dpdf','../manuscript/images/focal_mat_rb_2')
 
 %% Fgure 8; doubling time
 figure(8);clf;
@@ -541,4 +470,3 @@ ylabel('Biodiversity', 'interpreter', 'latex', 'fontsize',fs)
 subplot(2,1,2)
 hist((mean(sm./20)-mean(survM./20))./mean(survM./20)*100)
 xlabel('Percentage change in average biodiversity')
-% print('-dpdf','../manuscript/images/dft_results')
