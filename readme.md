@@ -17,4 +17,4 @@ The parameters are saved in the .mat files in the data folder. The names of the 
 
 [r,phi,beta,m,x)] = params{iSet,:}
 
-where iSet is equal to 1 in the files used to generate Figure 3 ('data/params_single_set_fm1.mat' ,'data/params_single_set_fm28.ma' and 'data/params_single_set_fm100.mat'),  and it goes from 1 to 100 in the rest of the files.
+where iSet is equal to 1 in the files used to generate Figure 3 ('data/params_single_set_fm1.mat', 'data/params_single_set_fm28.ma', and 'data/params_single_set_fm100.mat'),  and it goes from 1 to 100 in the rest of the files.
