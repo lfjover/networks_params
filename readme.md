@@ -10,7 +10,7 @@ The plots in Figure 3 were created in this way (with a single parameter set). Fo
 
 Each run is computed using the function 'pers_one_set.m', which calls 'pp_integrator_stop_heu.m' to integrate  the system 100 times (one for each matrix in the ensemble) based on the stopping time heuristic described in the Methods section.
 
-For Figure 7 'pp_integrator_fixed_time.m' was used to integrate the system for a fixed time.
+For Figure 7 'pers_one_set_fixed_time.m' was used to integrate the system for a fixed time.
 
 The code that generates the parameters used in all the runs is in generate_paramters.m
 The parameters are saved in the .mat files in the data folder. The names of the files start with "params" (e.g. 'data/params_single_set_fm100.mat'). There is a different file for each plot showing biodiversity in the paper. Once a file is loaded, the parameters and initial conditions in the "params" structure can be accessed in the following way:
