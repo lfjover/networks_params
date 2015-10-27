@@ -1,11 +1,43 @@
-%% Figure 2a: biodiversity vs nestedness ruled-based framework only fm100
+%% Figure 2: focal networks in ruled-based framework 
+%  low nestedness and perfectly nested networks
+fs =20;
+figure(7)
+setfigure(13,5,10,10)
+load('matrices/matrices_10by10_100_special.mat')
+subplot(1,2,2)
+M = matrices(:,:,1);
+PlotWeb(M)
+title('virus','fontsize',fs,'interpreter','latex')
+ylabel('bacteria','fontsize',fs,'interpreter','latex')
+text(-1.5,12.5,'b','fontsize',fs)
+
+subplot(1,2,1)
+M = matrices(:,:,end);
+PlotWeb(M)
+title('virus','fontsize',fs,'interpreter','latex')
+ylabel('bacteria','fontsize',fs,'interpreter','latex')
+text(-1.5,12.5,'a','fontsize',fs)
+print('-dpdf','fig2.pdf')
+
+%% Figure 3: biodiverist vs nestedness ruled-based framework
 close all
 clear all
 
-runName = 'rb_fm100_v2';
+runName = 'rb_fm1_v2';
 
-figure(1);clf;
-setfigure(10,6,5,5)
+figure(2)
+clf
+px = 10;
+py = 12.5;
+setfigure(px,py,5,10);
+lx = 2;
+rx = 1;
+intD = 1.6;
+ly = 1.5;
+uy = 1;
+axW = (px - lx -rx);
+axH = (py- uy - ly -intD)/2;
+
 fs = 18;
 ms = 6;
 run= 1;
@@ -14,42 +46,39 @@ par = ['data/params_' runName];
 res = ['data/result_' runName];
 load(par);load(res)
 
-
+axes('units','centimeters','position',[lx  ly axW axH])
 plot(sortNest(2:end),mean(survM(:,2:end)./20),'ok','markerfacecolor',[0.6 0.6 0.6],...
 'markersize',ms)
+text(sortNest(2),1.13,'b','fontsize',20)
 
 ylim([0 1])
 xlim([sortNest(2) 1])
 xlabel('Nestedness (NODF)','interpreter','latex','fontsize',fs)
 ylabel('Biodiversity', 'interpreter', 'latex', 'fontsize',fs)
 
-
-%% Figure 2b: biodiverist vs nestedness ruled-based framework only fm1
-runName = 'rb_fm1_v2';
-
-figure(2);clf;setfigure(10,6,5,5)
-fs = 18;
-ms = 6;
-run= 2;
+runName = 'rb_fm100_v2';
 
 par = ['data/params_' runName];
 res = ['data/result_' runName];
 load(par);load(res)
 
-% plot persistence
+axes('units','centimeters','position',[ lx ly+intD+axH axW axH])
+% plot persistence1.5
 plot(sortNest(2:end),mean(survM(:,2:end)./20),'ok','markerfacecolor',[0.6 0.6 0.6],...
 'markersize',ms)
+text(sortNest(2),1.13,'a','fontsize',20)
+% set(gca,'xtick',[])
 % hold on
 % plot(sortNest(focalM),mean(survM(:,focalM)./20),'ok',...
 %     'markersize',ms,'markerfacecolor','r')
 % hold off
 ylim([0 1])
 xlim([sortNest(2) 1])
-xlabel('Nestedness (NODF)','interpreter','latex','fontsize',fs)
+% xlabel('Nestedness (NODF)','interpreter','latex','fontsize',fs)
 ylabel('Biodiversity', 'interpreter', 'latex', 'fontsize',fs)
+print('-dpdf','fig3.pdf')
 
-
-%% Figure 3: perturbation-based framework one plot for each trend, single set
+%% Figure 4: feasibility-based framework one plot for each trend, single set
 runC = {'single_set_fm1_v5','single_set_fm28','single_set_fm100'};
 
 
@@ -221,10 +250,9 @@ text(xtext,ytop-ysep,['R^2 = ' sprintf('%.2f',rsq)],...
 axes('units','centimeters','position',...
     [mx+3*axW+2*intD-matH my+axH+matD matH matH])
 PlotWeb(matrices(:,:,100))
-
-  
-
-%% Figure 4a-f: bio vs nest for all deltas for low-nestedness network (fm1)
+ 
+print('-dpdf','fig4.pdf')
+%% Figure 5a-f: bio vs nest for all deltas for low-nestedness network (fm1)
 focalM =1;
 
 par = ['data/params_fm' num2str(focalM) '_delta1_v5'];
@@ -301,7 +329,7 @@ for dd = 1:size(survM3D,3)
 end
 
 
-%% Figure 4g-l: bio vs nest for all deltas for  perfectly nested net (fm100)
+%% Figure 5g-l: bio vs nest for all deltas for  perfectly nested net (fm100)
 focalM =100; %focal matrix
 par = ['data/params_fm' num2str(focalM) '_delta1_v4'];
 load(par)
@@ -378,10 +406,10 @@ for dd = 1:size(survM3D,3)
     ii = ii+1;
 end
 
-%% Figure 6: Focal networks in perturbation-based framework
+%% Figure 7: Focal networks in perturbation-based framework
 load('matrices/matrices_10by10_100_invertible.mat')
 fs =18;
-figure(6)
+figure(7)
 setfigure(20,7,10,10)
 subplot(1,3,3)
 M = matrices(:,:,end);
@@ -405,27 +433,7 @@ title('virus','fontsize',fs,'interpreter','latex')
 ylabel('bacteria','fontsize',fs,'interpreter','latex')
 xlabel(['NODF = ' num2str(sortNest(1),'%0.2f')],...
         'fontsize',fs-2,'interpreter','latex')
-
-%% Figure 7: focal networks in ruled-based framework 
-%  low nestedness and perfectly nested networks
-fs =20;
-figure(7)
-setfigure(13,5,10,10)
-load('matrices/matrices_10by10_100_special.mat')
-subplot(1,2,1)
-M = matrices(:,:,1);
-PlotWeb(M)
-title('virus','fontsize',fs,'interpreter','latex')
-ylabel('bacteria','fontsize',fs,'interpreter','latex')
-text(-1.5,12.5,'a','fontsize',fs)
-
-subplot(1,2,2)
-M = matrices(:,:,end);
-PlotWeb(M)
-title('virus','fontsize',fs,'interpreter','latex')
-ylabel('bacteria','fontsize',fs,'interpreter','latex')
-text(-1.5,12.5,'b','fontsize',fs)
-
+print('-dpdf','fig7.pdf')
 %% Fgure 8; doubling time
 figure(8);clf;
 setfigure(20,15,5,5)
@@ -448,6 +456,7 @@ plot(sortNest,mean(survM./20),'ok','markerfacecolor',[0.6 0.6 0.6],...
 ylim([0 1])
 xlabel('Nestedness (NODF)','interpreter','latex','fontsize',fs)
 ylabel('Biodiversity', 'interpreter', 'latex', 'fontsize',fs)
+text(min(sortNest),1.12,'b','fontsize',20)
 %title('Double time')
 
 
@@ -465,8 +474,11 @@ plot(sortNest,mean(survM./20),'ok','markerfacecolor',[0.6 0.6 0.6],...
 ylim([0 1])
 xlabel('Nestedness (NODF)','interpreter','latex','fontsize',fs)
 ylabel('Biodiversity', 'interpreter', 'latex', 'fontsize',fs)
+text(min(sortNest),1.12,'a','fontsize',20)
 %title('Stopping time heuristics')
 
 subplot(2,1,2)
 hist((mean(sm./20)-mean(survM./20))./mean(survM./20)*100)
 xlabel('Percentage change in average biodiversity')
+text(-1,30*1.12,'c','fontsize',20)
+print('-dpdf','fig8.pdf')
